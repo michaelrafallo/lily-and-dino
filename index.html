@@ -236,7 +236,7 @@ svg text{font-family:inherit}
 #ui{position:absolute;inset:0;pointer-events:none}
 #ui > *{pointer-events:auto}
 #topbar{position:absolute;top:calc(12px + var(--safe-t));left:calc(12px + var(--safe-l));right:calc(12px + var(--safe-r));display:flex;justify-content:space-between;align-items:center;gap:12px}
-#progress{display:flex;gap:4px;flex-wrap:wrap;max-width:min(60vw,calc(100% - 168px))}
+#progress{display:flex;gap:4px;flex-wrap:wrap;max-width:min(60vw,calc(100% - 168px));transition:opacity .35s,visibility .35s}
 #progress button{position:relative;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;display:grid;place-items:center;touch-action:manipulation}
 #progress svg{width:22px;height:22px;fill:#ffffff88;transition:transform .3s,fill .3s}
 #progress .seen svg{fill:#fff}
@@ -259,7 +259,7 @@ html.sideways #stage{position:fixed;top:50%;left:50%;width:var(--sw,100vh);heigh
 .icon-btn:focus-visible,.arrow:focus-visible,.cta:focus-visible,#progress button:focus-visible{box-shadow:0 0 0 4px var(--gold)}
 
 #bottom{position:absolute;left:calc(12px + var(--safe-l));right:calc(12px + var(--safe-r));bottom:calc(14px + var(--safe-b));display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:end;max-width:1040px;margin:0 auto}
-.arrow{width:68px;height:68px;border-radius:50%;border:0;background:var(--btn);color:var(--btn-ink);cursor:pointer;display:grid;place-items:center;box-shadow:0 8px 22px rgba(40,20,80,.3);outline:2.5px dashed var(--stitch);outline-offset:-8px;position:relative;touch-action:manipulation;transition:transform .12s ease}
+.arrow{width:68px;height:68px;border-radius:50%;border:0;background:var(--btn);color:var(--btn-ink);cursor:pointer;display:grid;place-items:center;box-shadow:0 8px 22px rgba(40,20,80,.3);outline:2.5px dashed var(--stitch);outline-offset:-8px;position:relative;touch-action:manipulation;transition:transform .12s ease,opacity .35s ease,visibility .35s}
 .arrow:active:not(:disabled){transform:scale(.9)}
 .arrow svg{width:34px;height:34px;transition:transform .2s}
 .arrow:disabled{opacity:.3;cursor:default}
@@ -272,6 +272,15 @@ html.sideways #stage{position:fixed;top:50%;left:50%;width:var(--sw,100vh);heigh
 #story{transition:max-height .45s cubic-bezier(.3,.8,.3,1),opacity .3s,padding .45s,transform .45s}
 html.playtime #story,html.ended #story{max-height:0!important;padding-top:0;padding-bottom:0;opacity:0;overflow:hidden;transform:translateY(24px);pointer-events:none}
 html.playtime .hint,html.ended .hint{display:none}
+/* Play time is the meadow, not the book: the row of stars and the way back
+   belong to the story and go with the words, leaving just the one arrow
+   onward. Hidden rather than removed, so nothing shifts along the row and
+   the keyboard cannot tab to a control that is not there. */
+html.playtime #progress,html.playtime #prev{opacity:0;visibility:hidden;pointer-events:none}
+/* the row itself stops catching taps, so the bottom of the meadow can be
+   reached and dragged on - only the arrow still answers */
+html.playtime #bottom{pointer-events:none}
+html.playtime #next{pointer-events:auto}
 /* the last page ends on a choice, standing in the middle of the picture */
 #endcard{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;padding:0 16px;pointer-events:none;transition:top .4s cubic-bezier(.3,.8,.3,1)}
 #endcard.high{top:36%}                 /* the title stays on show beneath it */
