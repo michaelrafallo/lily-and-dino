@@ -1,0 +1,2 @@
+# One file, many long template literals - keep line endings identical everywhere
+* text=auto eol=lf
